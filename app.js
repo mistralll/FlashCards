@@ -5,7 +5,7 @@ async function loadData() {
   const text = await res.text();
   const json = JSON.parse(text.substr(47).slice(0, -2));
 
-  const rows = json.table.rows.map(r => r.c.map(c => c ? c.v : ""));
+  const rows = json.table.rows.slice(1).map(r => r.c.map(c => c ? c.v : ""));
   render(rows);
 }
 
