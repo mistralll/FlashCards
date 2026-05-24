@@ -46,6 +46,10 @@ function filterWordsByDifficulty(level) {
   });
 }
 
+function getRandomSubset(array, count) {
+  return shuffleArray(array).slice(0, Math.min(count, array.length));
+}
+
 // モード管理
 function showMenu() {
   document.getElementById("menu-screen").style.display = "flex";
@@ -57,7 +61,7 @@ function showMenu() {
 async function startFlashCardMode() {
   if (words.length === 0) await loadData();
   const difficulty = getSelectedDifficulty();
-  activeWords = filterWordsByDifficulty(difficulty);
+  activeWords = getRandomSubset(filterWordsByDifficulty(difficulty), 10);
   if (activeWords.length === 0) {
     alert("選択した難易度の単語が見つかりません。難易度を変更してください。");
     return;
@@ -74,6 +78,13 @@ async function startFlashCardMode() {
 
 async function startDictionaryMode() {
   if (words.length === 0) await loadData();
+  const difficulty = getSelectedDifficulty();
+  activeWords = getRandomSubset(filterWordsByDifficulty(difficulty), 10);
+  if (activeWords.length === 0) {
+    alert("選択した難易度の単語が見つかりません。難易度を変更してください。");
+    return;
+  }
+
   document.getElementById("menu-screen").style.display = "none";
   document.getElementById("quiz-screen").style.display = "none";
   document.getElementById("flashcard-screen").style.display = "none";
@@ -155,7 +166,8 @@ function renderQuizQuestion() {
   const resultEl = document.getElementById("quiz-result");
   const nextBtn = document.getElementById("quiz-next-btn");
 
-  questionEl.textContent = `英語: ${english}`;
+  questionEl.textContent = `${english}`;
+  questionEl.classList.remove("correct", "wrong");
   optionsEl.innerHTML = "";
   resultEl.textContent = "";
   quizAnswered = false;
@@ -197,6 +209,7 @@ function selectQuizAnswer(answer) {
   const optionsEl = document.getElementById("quiz-options");
   const resultEl = document.getElementById("quiz-result");
   const nextBtn = document.getElementById("quiz-next-btn");
+  const questionEl = document.getElementById("quiz-question");
 
   Array.from(optionsEl.children).forEach(button => {
     button.disabled = true;
@@ -211,8 +224,10 @@ function selectQuizAnswer(answer) {
   if (answer === correctJapanese) {
     quizScore++;
     resultEl.textContent = "正解！";
+    questionEl.classList.add("correct");
   } else {
     resultEl.textContent = `不正解。正解は「${correctJapanese}」です。`;
+    questionEl.classList.add("wrong");
   }
 
   document.getElementById("quiz-score").textContent = `Score: ${quizScore}`;
@@ -255,7 +270,7 @@ function renderDictionary() {
   const tbody = document.getElementById("table-body");
   tbody.innerHTML = "";
 
-  words.forEach(row => {
+  activeWords.forEach(row => {
     const [english, japanese] = row;
 
     const tr = document.createElement("tr");

@@ -2,27 +2,27 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>英単語学習</title>
+  <title>FlashCard</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>英単語学習</h1>
+<h1>FlashCard</h1>
 
 <!-- メニュー画面 -->
 <div id="menu-screen">
   <div id="difficulty-settings">
-    <label for="difficulty-slider">難易度: <span id="difficulty-label">ふつう</span></label>
+    <label for="difficulty-slider">難易度: <span id="difficulty-label">Normal</span></label>
     <input type="range" id="difficulty-slider" min="1" max="3" step="1" value="2" oninput="updateDifficultyLabel(this.value)">
     <div class="difficulty-labels">
-      <span>やさしい</span>
-      <span>ふつう</span>
-      <span>むずかしい</span>
+      <span>Easy</span>
+      <span>Normal</span>
+      <span>Hard</span>
     </div>
   </div>
-  <button onclick="startQuizMode()">クイズ</button>
-  <button onclick="startFlashCardMode()">単語帳</button>
-  <button onclick="startDictionaryMode()">辞書</button>
+  <button onclick="startQuizMode()">Quiz</button>
+  <button onclick="startFlashCardMode()">Flashcards</button>
+  <button onclick="startDictionaryMode()">Dictionary</button>
 </div>
 
 <!-- クイズモード -->
@@ -32,9 +32,11 @@
     <span id="quiz-count"></span>
     <span id="quiz-score"></span>
   </div>
-  <div class="quiz-question" id="quiz-question">クリックして開始</div>
+  <div class="quiz-main">
+    <div class="quiz-question" id="quiz-question">クリックして開始</div>
+    <div class="quiz-result" id="quiz-result"></div>
+  </div>
   <div class="quiz-options" id="quiz-options"></div>
-  <div class="quiz-result" id="quiz-result"></div>
   <div class="flashcard-controls">
     <button onclick="nextQuizQuestion()" id="quiz-next-btn" disabled>次の問題 →</button>
   </div>
