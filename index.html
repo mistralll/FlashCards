@@ -11,8 +11,24 @@
 
 <!-- メニュー画面 -->
 <div id="menu-screen">
-  <button onclick="startFlashcardMode()">単語帳モード</button>
-  <button onclick="startDictionaryMode()">辞書モード</button>
+  <button onclick="startQuizMode()">クイズモード（Quiz）</button>
+  <button onclick="startFlashCardMode()">単語帳モード（Flash Card）</button>
+  <button onclick="startDictionaryMode()">辞書モード（Dictionary）</button>
+</div>
+
+<!-- クイズモード -->
+<div id="quiz-screen">
+  <button class="back-button" onclick="showMenu()">← メニューに戻る</button>
+  <div class="flashcard-info">
+    <span id="quiz-count"></span>
+    <span id="quiz-score"></span>
+  </div>
+  <div class="quiz-question" id="quiz-question">クリックして開始</div>
+  <div class="quiz-options" id="quiz-options"></div>
+  <div class="quiz-result" id="quiz-result"></div>
+  <div class="flashcard-controls">
+    <button onclick="nextQuizQuestion()" id="quiz-next-btn" disabled>次の問題 →</button>
+  </div>
 </div>
 
 <!-- 単語帳モード -->
@@ -21,12 +37,12 @@
   <div class="flashcard-info">
     <span id="flashcard-count"></span>
   </div>
-  <div class="flashcard" id="flashcard" onclick="toggleFlashcard()">
+  <div class="flashcard" id="flashcard" onclick="toggleFlashCard()">
     クリックして開始
   </div>
   <div class="flashcard-controls">
-    <button onclick="previousFlashcard()" id="prev-btn">← 前へ</button>
-    <button onclick="nextFlashcard()" id="next-btn">次へ →</button>
+    <button onclick="previousFlashCard()" id="prev-btn">← 前へ</button>
+    <button onclick="nextFlashCard()" id="next-btn">次へ →</button>
   </div>
 </div>
 
